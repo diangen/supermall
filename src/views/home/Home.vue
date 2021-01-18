@@ -1,17 +1,37 @@
 <template>
-  <div>
-    <p>我的</p>
+  <div id="home">
+    <nav-bar class="home-bar">
+      <div slot="center">购物街</div>
+    </nav-bar>
   </div>
 </template>
 
 <script>
+import NavBar from "components/common/navbar/navbar.vue";
+import { getHomeMultidata } from "network/home";
 export default {
   name: "Home",
+  components: {
+    NavBar,
+  },
   data() {
-    return {};
+    return {
+      banner: [],
+      recommends: [],
+    }
+  },
+  created() {
+    getHomeMultidata().then((res) => {
+      this.banner = res.data.banner;
+      this.recommends = res.data.recom;
+    });
   },
 };
 </script>
 
 <style  scoped>
+.home-bar {
+  background-color: gray;
+  color: #fff;
+}
 </style>
