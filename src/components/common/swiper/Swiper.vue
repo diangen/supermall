@@ -46,4 +46,7 @@ export default {
   width: 100%;
   height: 100%;
 }
+.swiper-slide{
+  width: 100%;
+}
 </style>
