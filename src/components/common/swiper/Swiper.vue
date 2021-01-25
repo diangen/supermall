@@ -1,8 +1,8 @@
 <template>
   <div class="swiper-container">
-    <div class="swiper-wrapper" v-for="item in banner">
+    <div class="swiper-wrapper" v-for="(item, index) in banner" :key="index">
       <div class="swiper-slide">
-        <img :src="item.image" alt="" />
+        <img :src="item.image" alt="" @load="imgLoad" />
       </div>
     </div>
     <!-- 如果需要分页器 -->
@@ -29,10 +29,20 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      isLoad: false,
+    };
   },
   mounted() {
     var mySwiper = new Swiper(".swiper-container", {});
+  },
+  methods: {
+    imgLoad() {
+      if (!this.isLoad) {
+        this.$emit("SwiperImgLoad");
+        this.isLoad = true;
+      }
+    },
   },
 };
 </script>
@@ -46,7 +56,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.swiper-slide{
+.swiper-slide {
   width: 100%;
 }
 </style>

@@ -8,6 +8,8 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+Vue.prototype.$bus = new Vue()
+
 /* eslint-disable no-new */
 new Vue({
   router,
