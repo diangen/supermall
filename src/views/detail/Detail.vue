@@ -7,23 +7,26 @@
       <detail-shop-info :shop="shop" />
       <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad" />
       <detail-param-info :param-info="paramInfo" />
+      <goods-list :goods="recommends"></goods-list>
     </scroll>
   </div>
 </template>
 
 <script>
-  import Scroll from 'components/common/scroll/Scroll'
-  import {getDetail, Goods, Shop, GoodsParam} from "network/detail";
+import Scroll from "components/common/scroll/Scroll";
+import { getDetail, Goods, Shop, GoodsParam } from "network/detail";
+import { itemListenerMixin } from "common/mixin";
 
 import DetailNavBar from "./childComps/DetailNavBar";
 import DetailBaseInfo from "./childComps/DetailBaseInfo";
 import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
-
+import GoodsList from "components/content/goods/GoodList";
 
 export default {
   name: "Detail",
+  mixin: [itemListenerMixin],
   data() {
     return {
       iid: null,
@@ -32,6 +35,8 @@ export default {
       shop: {},
       detailInfo: {},
       paramInfo: {},
+      recommend: {},
+      itemImgListener: null,
     };
   },
   components: {
@@ -41,7 +46,8 @@ export default {
     DetailShopInfo,
     DetailGoodsInfo,
     DetailParamInfo,
-    scroll,
+    Scroll,
+    GoodsList,
   },
   created() {
     // 保存iid
@@ -68,11 +74,19 @@ export default {
         data.itemParams.rule
       );
     });
+    // 请求推荐数据
+    getRecommend().then((res) => {
+      this.recommend = res.list;
+    });
   },
   methods: {
     imageLoad() {
       this.$refs.scroll.refresh();
     },
+  },
+  mounted() {},
+  deactivated() {
+    this.$bus.$off("itemImgLoad", this.itemImgListener);
   },
 };
 </script>
