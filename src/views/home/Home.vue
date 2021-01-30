@@ -18,7 +18,7 @@
       :pull-up-load="true"
       @pullingUp="loadMore"
     >
-      <swiper :banner="banner" @SwiperImgLoad="SwiperImgLoad"></swiper>
+      <home-swiper :banner="banner" @SwiperImgLoad="SwiperImgLoad"></home-swiper>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
       <tab-control
@@ -34,26 +34,26 @@
 </template>
 
 <script>
-import NavBar from "components/common/navbar/navbar.vue";
-import Swiper from "components/common/swiper/Swiper.vue";
-import TabControl from "components/content/tabControl/TabControl.vue";
-
-import { getHomeMultidata, getHomeGoods } from "network/home";
-
+import HomeSwiper from './childComps/HomeSwiper'
 import RecommendView from "./childComps/RecommendView";
 import FeatureView from "./childComps/FeatureView.vue";
 
+import NavBar from "components/common/navbar/navbar.vue";
+import TabControl from "components/content/tabControl/TabControl.vue";
 import GoodList from "components/content/goods/GoodList.vue";
-
 import Scroll from "components/common/scroll/Scroll.vue";
 import BackTop from "components/content/backTop/BackTop.vue";
+
+import { getHomeMultidata, getHomeGoods } from "network/home";
+import {debounce} from "common/utils"
+
 
 export default {
   name: "Home",
   components: {
     NavBar,
     RecommendView,
-    Swiper,
+    HomeSwiper,
     FeatureView,
     TabControl,
     GoodList,
@@ -447,23 +447,25 @@ export default {
   },
 
   methods: {
-    /* 
-      网络请求事件
-    */
-    getHomeMultidata() {
-      getHomeMultidata().then((res) => {
-        // this.banner = res.data.banner;
-        // this.recommends = res.data.recom;
-      });
-    },
-    getHomeGoods(type) {
-      const page = this.goods[type].page + 1;
-      // getHomeGoods(type).then((res) => {
-      // this.goods[type].list.push(...res.data.list);
-      // this.goods[type].page += 1;
-      this.$refs.scroll.finishPullDown();
-      // });
-    },
+   /**
+       * 网络请求相关的方法
+       */
+      getHomeMultidata() {
+        getHomeMultidata().then(res => {
+          this.banners = res.data.banner.list;
+          this.recommends = res.data.recommend.list;
+        })
+      },
+      getHomeGoods(type) {
+        const page = this.goods[type].page + 1
+        getHomeGoods(type, page).then(res => {
+          this.goods[type].list.push(...res.data.list)
+          this.goods[type].page += 1
+
+          // 完成上拉加载更多
+          this.$refs.scroll.finishPullUp()
+        })
+      },
 
     /* 
       点击事件

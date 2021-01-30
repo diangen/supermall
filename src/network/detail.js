@@ -1,4 +1,4 @@
-import { request } from './request'
+import {request} from "./request";
 
 export function getDetail(iid) {
   return request({
@@ -9,22 +9,42 @@ export function getDetail(iid) {
   })
 }
 
-export class GoodsInfo {
-  constructor(itemInfor, columns, services) {
-    this.title = itemInfor.title
-    this.desc = itemInfor.desc
-    this.newPrice = itemInfor.price
-    this.oldPrice = itemInfor.oldPrice
-    this.discount = itemInfor.discount
+export class Goods {
+  constructor(itemInfo, columns, services) {
+    this.title = itemInfo.title
+    this.desc = itemInfo.desc
+    this.newPrice = itemInfo.price
+    this.oldPrice = itemInfo.oldPrice
+    this.discount = itemInfo.discountDesc
     this.columns = columns
     this.services = services
-    this.realPrice = itemInfor.lowNowPrice
+    this.realPrice = itemInfo.lowNowPrice
   }
 }
-export class GoodParam {
+
+
+export class Shop {
+  constructor(shopInfo) {
+    this.logo = shopInfo.shopLogo;
+    this.name = shopInfo.name;
+    this.fans = shopInfo.cFans;
+    this.sells = shopInfo.cSells;
+    this.score = shopInfo.score;
+    this.goodsCount = shopInfo.cGoods
+  }
+}
+
+
+export class GoodsParam {
   constructor(info, rule) {
-    this.image = info.images ? info.images[0] : "";
+    // 注: images可能没有值(某些商品有值, 某些没有值)
+    this.image = info.images ? info.images[0] : '';
     this.infos = info.set;
     this.sizes = rule.tables;
   }
 }
+
+
+
+
+
