@@ -12,17 +12,16 @@
 </template>
 
 <script>
+  import Scroll from 'components/common/scroll/Scroll'
+  import {getDetail, Goods, Shop, GoodsParam} from "network/detail";
+
 import DetailNavBar from "./childComps/DetailNavBar";
-import Swiper from "components/common/swiper/Swiper.vue";
 import DetailBaseInfo from "./childComps/DetailBaseInfo";
 import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
-import scroll from "components/common/scroll/scroll";
 
-import { getDSetail, Goods, Shop, GoodsParam } from "network/detail";
 
-import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 export default {
   name: "Detail",
   data() {
