@@ -367,6 +367,7 @@ export default {
       topTrue: false,
       tabOffsetTop: 0,
       isTabFiexd: false,
+      saveY:0
     };
   },
   created() {
@@ -435,6 +436,15 @@ export default {
       return this.goods[this.curretnType].list;
     },
   },
+  // 活跃状态
+  activated() {
+    this.$refs.scroll.scrollTo(0,this.saveY,0)
+    this.$refs.scroll.refresh();
+  },
+  // 离开状态
+  deactivated() {
+    this.saveY = this.$refs.scroll.getScrollY();
+  },
 
   methods: {
     /* 
@@ -451,7 +461,7 @@ export default {
       // getHomeGoods(type).then((res) => {
       // this.goods[type].list.push(...res.data.list);
       // this.goods[type].page += 1;
-      this.$refs.scroll.finishPullUp();
+      this.$refs.scroll.finishPullDown();
       // });
     },
 

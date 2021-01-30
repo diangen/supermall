@@ -45,12 +45,15 @@ export default {
     scrollTo(x, y, time = 500) {
       this.scroll && this.scroll.scrollTo(x, y, time);
     },
-    finishPullUp() {
-      this.scroll && this.scroll.finishPullUp();
-      console.log("下拉一次")
+    finishPullDown() {
+      this.scroll && this.scroll.finishPullDown();
+      console.log("下拉一次");
     },
     refresh() {
       this.scroll && this.scroll.refresh();
+    },
+    getScrollY() {
+      return this.scroll ? this.scroll.scrollY : 0;
     },
   },
 };

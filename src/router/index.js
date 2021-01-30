@@ -7,6 +7,7 @@ const home = () => import("views/home/Home.vue")
 const category = () => import("views/category/Category.vue")
 const cart = () => import("views/cart/Cart.vue")
 const profile = () => import("views/profile/Profile.vue")
+const detail = ()=>import("views/detail/Detail.vue")
 
 // 安装插件
 Vue.use(VueRouter)
@@ -35,6 +36,10 @@ const routes = [
   {
     path: '/cart',
     component: cart
+  },
+  {
+    path: '/detail',
+    component: detail
   },
 ]
 // 创建路由对象
