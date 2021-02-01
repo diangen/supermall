@@ -84,7 +84,6 @@ export default {
       this.$refs.scroll.refresh();
     },
   },
-  mounted() {},
   deactivated() {
     this.$bus.$off("itemImgLoad", this.itemImgListener);
   },

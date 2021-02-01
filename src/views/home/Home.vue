@@ -485,6 +485,7 @@ export default {
       }
       this.$refs.tabControl1.currentActive = index;
       this.$refs.tabControl2.currentActive = index;
+      this.showGoods = this.goods[this.curretnType].list;
     },
 
     // 事件监听
